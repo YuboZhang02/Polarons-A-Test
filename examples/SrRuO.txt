@@ -1,0 +1,127 @@
+% set all parameters here, then just type 'run filename_of_this_txt' in command line to conduct simulation
+% This is a tempalte input file. 
+% Adjust any parameters and save this file with a name
+
+% Content
+% 0.On-off Switch
+% 1.Global Parameters
+% 2.Wave Packet Parameters
+% 3.Lattice Parameters
+% 4.Simulation Parameters
+
+% ======================================================================
+% 0.on-off switch
+% ======================================================================
+dynamic       = true;  % if not dynamic, back_action not work automatically
+back_action   = true;  % open back action or not, set strength in 'parameter'
+two_body      = false; % choose true to simulate two body WF, otherwise 1-body
+save_video    = false; % save the result as a video or not
+real_time_fig = true;  % show real-time result as simulation goes
+save_all_time = false;  % save all-time result as simulation goes
+
+bound_state   = false; % solve the bound state of electron at N=1
+plt_all_solved_states = false; % if false, only show lowest/highest energy
+
+potential_lim_fix = false; % fix the potential limit in figure
+
+% choose figure you want to plot, at most 8 of them
+plot_RePsi    = true;  % plot real part of wavefunc
+plot_potent   = true;  % plot potential include deformation one
+plot_blurredpotent = false; % plot potential include blured deformation one
+plot_absPsi   = true;  % plot modulus of wavefunc
+plot_ave_xy   = false; % plot average position
+plot_ave_k    = true;  % plot average momentum
+plot_msd      = true;  % plot mean square distance
+plot_xcorrU   = false; % plot space correlation map of potential
+plot_tcorrPsi = false; % plot time correlation func of wavefunc
+plot_tcorrU   = false;  % plot time correlation func of potential
+plot_Energy   = true; % plot the energy of system with time
+plot_alpha    = true;  % plot the distribution of coherent state eigenvalue alpha_q
+plot_RePsiP   = true;  % plot the real part of wavefunc in momentum space
+plot_tcorrPsi0 = false; % plot time correlation func of wavefunc with initial state
+plot_PsiOverU = true; % plot the contour of U and psi^2 in single figure
+plot_UOverPsi = true; % plot the contour of psi^2 and U in single figure
+
+blur = 0;                   %blur the deformation potential. 0=no bluring at all, 1=completely blured. 0<=blur<1.
+% ======================================================================
+
+% ======================================================================
+% 1.Global Parameters
+% ======================================================================
+T  = 50; % Temperature (K)
+B  = 0;  % Magnetic field (Tesla, -z direction)
+E  = 0;  % Electric field (V/m, x direction)
+
+% ======================================================================
+% 2.Wave Packet Parameters
+% ======================================================================
+
+EF = 0.03;        % define Fermi Energy first (eV), used in solving bound state around EF
+EF_range = 3;    % solve bound state around EF ± EF_range*kB*T
+
+% choose between 'Gaussian' and 'PlaneWave'
+WP_type = 'Gaussian'; 
+
+% for 'PlaneWave', define 3 variables
+qs      = 1;   % 2*kF/qD, initial momentum, (qs=1.5 for YBCO at critical
+                 % doping, qs=1.75 for LSCO)
+theta   = 0;     % initial direction of momentum, 0 to 360 (degree)
+density = 1;     % normalization factor, the number of electrons in the box
+
+% for 'Gaussian', define 4 more
+x0      = 0;  % initial location of wave packet, -0.5 to 0.5 (box length Lx)
+y0      = 0;     % initial location of wave packet, -0.5 to 0.5 (box width Ly)
+sigma_x = 0.02;  % width of wave packet in x-direction, 0 to 0.5 (Lx)
+sigma_y = 0.02;  % width of wave packet in y-direction, 0 to 0.5 (Ly)
+
+% ======================================================================
+% 3.Lattice Parameters
+% ======================================================================
+a    = 0.39;   % lattice parameter (nm, almost the same 0.40 for YBCO and LSCO 
+               % in both directions, 0.36 for Cu)
+pd   = 1.04;  % distance btw CuO2 planes (nm, 0.591 for YBCO, 0.657 for LSCO, 
+               % 0.36 for Cu)
+meff = 6.8;      % charge carrier effective mass (me, 3 for YBCO, 
+               % 20 for LSCO, 1 for Cu)
+Ed   = 20;     % Deformation potential constant (eV)
+rho  = 8.9;   % mass density (g/cm^3, 6.20 for YBCO, and 6.92 LSCO)
+
+lattice_strength = 0;  % tune lattice potential strength
+lattice_spacing  = 10; % lattice spacing used in lattice potential (a)
+
+% ------------ dispersion relation type -------------
+% choose between 'Linear','Acoustic' and 'Optic'
+dspr_type = 'Linear';
+vs        = 5850;   % sound velocity (m/s, 6300 for YBCO, 6000 for LSCO, 
+                    % 4700 for Cu)
+% ---------------------------------------------------
+
+% --------------- band structure type ---------------
+% choose between 'Parabolic','Rectangle' and 'Linear'
+BS_type = 'Parabolic';
+
+% for 'Rectangle' we have hopping term (tight binding band structure)
+t1 = 0.05; % hopping parameter in x-direction (eV)
+t2 = 0.05; % hopping parameter in x-direction (eV)
+% ---------------------------------------------------
+
+% ======================================================================
+% 4.Simulation Parameters
+% ======================================================================
+nx  = 128;      % x half grid size
+ny  = 128;      % y half grid size
+Lx  = 20;      % box x-length (nm)
+Ly  = 20;      % box y-width (nm)
+
+tau  = 2;        % simulation timestep (fs, or 1e-15 s)
+N    = 1000;     % num of time steps
+seed = 2023;     % random seed
+n_bs = 60;       % how many levels of bound state to show
+
+save_interval = 10;  % save the all time wavefunction/potential data in how many steps
+plot_interval = 20;  % plot the simulation figure in how many steps
+
+bsNx = 128;
+bsNy = 128;
+
+use_cluster = true;
